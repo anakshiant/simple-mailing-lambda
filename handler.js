@@ -6,7 +6,7 @@ const ses = new AWS.SES();
 
 exports.handler = async (event, _context) => {
   const { fields, files } = resolveBody(event);
-
+  const returnUrl = event.queryStringParameters.returnUrl;
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     ses,
@@ -24,8 +24,13 @@ exports.handler = async (event, _context) => {
     ],
   });
 
-
-  return {};
+  const response = {
+    statusCode: 301,
+    headers: {
+      Location: returnUrl,
+    },
+  };
+  return response;
 };
 
 function resolveBody(request) {
