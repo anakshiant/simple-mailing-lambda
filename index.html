@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>anand</title>
+  </head>
+  <body>
+    <input type="text" name="title" />
+    <input type="file" id="myfile" name="file" />
+    <button id="ok">susjs</button>
+  </body>
+  <script type="text/javascript">
+    const button = document.getElementById("ok");
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    button.addEventListener("click", Main);
+    async function Main(e) {
+      e.preventDefault();
+      const file = document.querySelector("#myfile").files[0];
+      const result = await toBase64(file).catch((e) => Error(e));
+      console.log(result);
+
+      const response = await fetch(
+        "https://k7w2c3wx7g.execute-api.us-east-1.amazonaws.com/stage/sendMailWithAttachment?returnUrl=https://www.google.com",
+        {
+          method: "POST",
+          body: { base64: result },
+        }
+      );
+
+      console.log(response);
+      if (result instanceof Error) {
+        console.log("Error: ", result.message);
+        return;
+      }
+      //...
+    }
+  </script>
+</html>
