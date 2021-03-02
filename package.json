@@ -1,0 +1,16 @@
+{
+  "name": "email-sending-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "anakshiant",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.5.0",
+    "formidable": "^1.2.2",
+    "aws-sdk": "^2.854.0"
+  }
+}
